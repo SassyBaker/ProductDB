@@ -5,7 +5,7 @@
         <div class="container px-5 py-24 mx-auto">
             <div class="flex -m-4">
                 {% for item in products %}
-                    <div class="lg:w-1/4 md:w-1/2 p-4 h-full w-full">
+                    <div class="lg:w-1/4 md:w-1/2 p-4 h-full w-full" hx-redirect="http://127.0.0.1:8000/products/{{ item.id }}" hx-trigger="click">
                         <a class="block relative rounded overflow-hidden">
                             <img alt="ecommerce" class="object-cover object-center w-full h-full block"
                                  src="http://127.0.0.1:8000/media/{{ item.image }}">
