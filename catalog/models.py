@@ -49,6 +49,9 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
+    def get_history(self):
+        return PriceHistory.objects.filter(parent_product=self.pk)
+
     def __str__(self):
         return f"{self.product_brand} - {self.product_name}"
 

@@ -6,28 +6,76 @@
         <div class="container px-5 py-24 mx-auto">
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                     src="https://dummyimage.com/400x400">
+                     src="http://127.0.0.1:8000/media/{{ product.image }}">
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ product.product_brand }}</h2>
                     <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ product.product_name }}</h1>
                     <div class="flex border-t border-gray-200 py-2">
-                        <span class="text-gray-500">Color</span>
-                        <span class="ml-auto text-gray-900">Blue</span>
+                        <span class="text-gray-500">Size</span>
+                        <span class="ml-auto text-gray-900">{{ product.product_weight }} {{ product.product_weight_units.upper }}</span>
                     </div>
                     <div class="flex border-t border-gray-200 py-2">
-                        <span class="text-gray-500">Size</span>
-                        <span class="ml-auto text-gray-900">Medium</span>
+                        <span class="text-gray-500">Status</span>
+                        <span class="ml-auto text-gray-900">{{ product.product_status.capitalize }}</span>
                     </div>
-                    <div class="flex border-t border-b mb-6 border-gray-200 py-2">
-                        <span class="text-gray-500">Quantity</span>
-                        <span class="ml-auto text-gray-900">4</span>
+                    <div class="flex border-t border-gray-200 py-2">
+                        <span class="text-gray-500">SKU</span>
+                        <span class="ml-auto text-gray-900">{{ product.product_sku }}</span>
                     </div>
-
-
+                    <div class="flex">
+                        <span class="title-font font-medium text-2xl text-gray-900">${{ product.pricehistory_set.all.last.price }}</span>
+                        <button class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
+                            Add to Cart
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </section>
 
+
+
+    <section class="text-gray-600 body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="lg:w-4/5 mx-auto flex flex-wrap">
+                <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            Store
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Quantity
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Date
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Price
+                        </th>
+                        {#                        <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>#}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in product.pricehistory_set.all reversed %}
+                        <tr>
+                            <td class="px-4 py-3">{{ item.location }}</td>
+                            {% if item.quantity <= -1 %}
+                                <td class="px-4 py-3">Many</td>
+                            {% else %}
+                                <td class="px-4 py-3">{{ item.quantity }}</td>
+                            {% endif %}
+
+                            <td class="px-4 py-3">{{ item.date_created }}</td>
+                            <td class="px-4 py-3 text-lg text-gray-900 text-right">${{ item.price }}</td>
+                            {#            <td class="w-10 text-center">#}
+                            {#              <input name="plan" type="radio">#}
+                            {#            </td>#}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 {% endblock %}

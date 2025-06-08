@@ -5,14 +5,14 @@
         <div class="container px-5 py-24 mx-auto">
             <div class="flex -m-4">
                 {% for item in products %}
-                    <div class="lg:w-1/4 md:w-1/2 p-4 h-full w-full" hx-redirect="http://127.0.0.1:8000/products/{{ item.id }}" hx-trigger="click">
-                        <a class="block relative rounded overflow-hidden">
+                    <div class="lg:w-1/4 md:w-1/2 p-4 h-full w-full">
+                        <a class="block relative rounded overflow-hidden" href="{% url 'product-detail' item.id %}">
                             <img alt="ecommerce" class="object-cover object-center w-full h-full block"
                                  src="http://127.0.0.1:8000/media/{{ item.image }}">
                         </a>
                         <div class="mt-4">
-                            <h3 class="text-gray-700 text-xs tracking-widest title-font mb-1">{{ item.product_brand }}</h3>
-                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ item.product_name }}</h2>
+                            <h3 class="text-gray-700 text-xs tracking-widest title-font mb-1" href="{% url 'product-detail' item.id %}">{{ item.product_brand }}</h3>
+                            <h2 class="text-gray-900 title-font text-lg font-medium" href="{% url 'product-detail' item.id %}">{{ item.product_name }}</h2>
                         </div>
                     </div>
                 {% endfor %}
